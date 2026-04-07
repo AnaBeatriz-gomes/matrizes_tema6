@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Neon Galaxy - Reserva de Assentos 4x5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0d0d2b;
+            min-height: 100vh;
+            padding: 30px 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .card-cinema {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .cabecalho-cinema {
+            padding: 25px 30px;
+            text-align: center;
+            background: linear-gradient(90deg, #00f0ff, #8a2be2);
+            border-radius: 30px 30px 0 0;
+        }
+
+        .nome-cinema {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+            text-shadow: 0 0 10px #00f0ff, 0 0 20px #8a2be2;
+        }
+
+        .endereco-cinema {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+            color: #00f0ff;
+        }
+
+        .info-filme {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .info-filme p {
+            margin: 5px 0;
+        }
+
+        .tela-container {
+            text-align: center;
+            margin: 20px 30px;
+        }
+
+        .tela {
+            background: #0a0a1f;
+            color: #00fff0;
+            padding: 12px;
+            border-radius: 10px 10px 30px 30px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            font-size: 1rem;
+        }
+
+        .mapa-assentos {
+            display: flex;
+            justify-content: center;
+            margin: 30px;
+        }
+
+        .matriz-assentos {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .linha-assentos {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .assento {
+            width: 60px;
+            height: 60px;
+            background: #1a1a2e;
+            border-radius: 15px 15px 25px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 8px #00f0ff;
+            transition: all 0.2s ease;
+        }
+
+        .assento:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 12px #00ff90, 0 0 20px #ff0f0f;
+        }
+
+        .assento.ocupado {
+            background: #00f0ff;
+            cursor: not-allowed;
+            opacity: 0.8;
+            box-shadow: 0 0 6px #fa0744;
+        }
+
+        .assento.selecionado {
+            background: #00ff90;
+            box-shadow: 0 0 10px #fff, 0 0 20px #00ff90;
+        }
+
+        .assento .numero {
+            font-size: 1.2rem;
+        }
+
+        .assento .posicao {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .legenda {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .legenda-cor {
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+        }
+
+        .painel-reserva {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 20px 30px 30px;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .resumo-reserva {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .btn-reservar {
+            background: #d81e1e;
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 5px;
+        }
+
+        .btn-reservar:hover {
+            background: #f70f0f;
+            transform: scale(1.05);
+        }
+
+        .btn-limpar {
+            background: #8a2be2;
+            color: #fff;
+        }
+
+        .btn-limpar:hover {
+            background: #aa4fff;
+            transform: scale(1.05);
+        }
+
+        .rodape-conceito {
+            background: #0d0d2b;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 30px;
+            border-radius: 20px;
+        }
+
+        .rodape-conceito code {
+            background: #0a0a1f;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #00fff0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card-cinema">
+            <div class="cabecalho-cinema" id="cabecalhoCinema">
+                <div class="nome-cinema" id="displayNomeCinema">Neon Galaxy</div>
+                <div class="endereco-cinema" id="displayEndereco">Via Láctea, 42 – Setor Estelar</div>
+                <div class="info-filme" id="infoFilme">
+                    <p>🎬 <strong id="displayFilme">Cosmos Lumina: O Despertar das Estrelas</strong></p>
+                    <p>⏰ <strong id="displayHorario">21:45 – Sala Holográfica 7</strong></p>
+                </div>
+            </div>
+            <div class="tela-container">
+                <div class="tela">✨ TELA GALÁXIA ✨</div>
+            </div>
+            <div class="mapa-assentos">
+                <div class="matriz-assentos" id="matrizAssentos"></div>
+            </div>
+            <div class="legenda">
+                <div class="legenda-item">
+                    <div class="legenda-cor" style="background:#111;"></div> <span>Disponível</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="legenda-cor" style="background:#00fff7;"></div> <span>Selecionado</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="legenda-cor" style="background:#ff004f;"></div> <span>Reservado</span>
+                </div>
+            </div>
+            <div class="painel-reserva">
+                <div class="resumo-reserva" id="resumoReserva">🎫 Nenhum assento selecionado</div>
+                <button class="btn-reservar" id="btnReservar">✅ Reservar Assentos</button>
+                <button class="btn-reservar btn-limpar" id="btnLimpar">🗑️ Limpar Seleção</button>
+            </div>
+        </div>
+        <div class="rodape-conceito">
+            📊 Cada assento é acessado como <code>assentos[linha][coluna]</code>.<br>
+            💫 Matriz de 4 linhas x 5 colunas – explore a galáxia de neon!
+        </div>
+    </div>
+    <script>
+        const NOME_CINEMA = "Cine Estrelar";
+        const ENDERECO = "Via Láctea, 42 – Setor Estelar";
+        const NOME_FILME = "Cosmos Lumina: O Despertar das Estrelas";
+        const HORARIO = "21:45 – Sala Holográfica 7";
+
+        const COR_CABECALHO = "#c600ff";
+        const COR_TEXTO = "#fff";
+        const COR_BOTOES = "#00fff7";
+
+        let assentos = [
+            ["livre", "ocupado", "livre", "livre", "ocupado"],
+            ["livre", "livre", "ocupado", "livre", "livre"],
+            ["livre", "livre", "livre", "ocupado", "livre"],
+            ["ocupado", "livre", "livre", "livre", "ocupado"]
+        ];
+
+        function aplicarPersonalizacao() {
+            const cabecalho = document.getElementById("cabecalhoCinema");
+            cabecalho.style.color = COR_TEXTO;
+            cabecalho.style.backgroundColor = COR_CABECALHO;
+            document.getElementById("displayNomeCinema").innerText = NOME_CINEMA;
+            document.getElementById("displayEndereco").innerText = ENDERECO;
+            document.getElementById("displayFilme").innerText = NOME_FILME;
+            document.getElementById("displayHorario").innerText = HORARIO;
+            document.querySelectorAll(".btn-reservar").forEach(b => { b.style.backgroundColor = COR_BOTOES; b.style.color = "#111"; });
+        }
+
+        function renderizarMatriz() {
+            const container = document.getElementById("matrizAssentos");
+            container.innerHTML = "";
+            for (let l = 0; l < assentos.length; l++) {
+                const divLinha = document.createElement("div");
+                divLinha.className = "linha-assentos";
+                for (let c = 0; c < assentos[l].length; c++) {
+                    const assentoDiv = document.createElement("div");
+                    assentoDiv.className = "assento";
+                    const status = assentos[l][c];
+                    if (status === "ocupado") assentoDiv.classList.add("ocupado");
+                    else if (status === "selecionado") assentoDiv.classList.add("selecionado");
+                    const numeroAssento = l * assentos[0].length + c + 1;
+                    const letraLinha = String.fromCharCode(65 + l);
+                    assentoDiv.innerHTML = `<div class="numero">${numeroAssento}</div><div class="posicao">${letraLinha}${c + 1}</div>`;
+                    assentoDiv.onclick = (function (l, c) {
+                        return function () {
+                            if (assentos[l][c] === "ocupado") return alert("❌ Assento já reservado!");
+                            assentos[l][c] = assentos[l][c] === "selecionado" ? "livre" : "selecionado";
+                            renderizarMatriz(); atualizarResumo();
+                        };
+                    })(l, c);
+                    divLinha.appendChild(assentoDiv);
+                }
+                container.appendChild(divLinha);
+            }
+        }
+
+        function atualizarResumo() {
+            let selecionados = [];
+            for (let i = 0; i < assentos.length; i++)
+                for (let j = 0; j < assentos[i].length; j++)
+                    if (assentos[i][j] === "selecionado") selecionados.push(`${String.fromCharCode(65 + i)}${j + 1}`);
+            document.getElementById("resumoReserva").innerHTML = selecionados.length === 0 ? "🎫 Nenhum assento selecionado" : `🎫 Assentos selecionados: <strong>${selecionados.join(", ")}</strong>`;
+        }
+
+        function reservarAssentos() {
+            let tem = false;
+            for (let i = 0; i < assentos.length; i++)
+                for (let j = 0; j < assentos[i].length; j++)
+                    if (assentos[i][j] === "selecionado") { assentos[i][j] = "ocupado"; tem = true; }
+            if (tem) { alert("🎉 Reserva confirmada!"); renderizarMatriz(); atualizarResumo(); }
+            else alert("⚠️ Nenhum assento selecionado.");
+        }
+
+        function limparSelecao() {
+            for (let i = 0; i < assentos.length; i++)
+                for (let j = 0; j < assentos[i].length; j++)
+                    if (assentos[i][j] === "selecionado") assentos[i][j] = "livre";
+            renderizarMatriz(); atualizarResumo();
+        }
+
+        document.getElementById("btnReservar").addEventListener("click", reservarAssentos);
+        document.getElementById("btnLimpar").addEventListener("click", limparSelecao);
+
+        aplicarPersonalizacao(); renderizarMatriz(); atualizarResumo();
+    </script>
+</body>
+
+</html>
